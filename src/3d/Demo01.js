@@ -1,7 +1,11 @@
 import React, {Component} from 'react';
 
+import oilcanMtl from "../model/oilcan.mtl";
+import oilcanObj from "../model/oilcan.obj"
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import {MTLLoader} from "three/examples/jsm/loaders/MTLLoader";
+import {OBJLoader} from "three/examples/jsm/loaders/OBJLoader";
 
 class Demo01 extends Component{
 
@@ -14,6 +18,8 @@ class Demo01 extends Component{
         const geometry = new THREE.BoxGeometry(100, 100, 100);
         const material = new THREE.MeshLambertMaterial({color: 0x0000ff});
         const mesh = new THREE.Mesh(geometry, material);
+
+        mesh.translateX(80);
 
         scene.add(mesh);
 
@@ -33,6 +39,28 @@ class Demo01 extends Component{
         const camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
         camera.position.set(200, 300, 200);
         camera.lookAt(scene.position);
+
+
+        const mtlLoader = new MTLLoader();
+        //mtl材质加载器
+        mtlLoader.load(oilcanMtl, mtl);
+
+        //加载.mtl文件，执行mtl函数
+        function mtl(material) {
+            const objLoader = new OBJLoader();
+            //obj模型加载器
+            objLoader.setMaterials(material);
+            //mtl材质赋值给obj模型
+            objLoader.load(oilcanObj, obj);
+            //加载.obj文件，执行obj函数
+        }
+
+        function obj(object3D) {
+            // object3D.scale.set(100, 100, 100);
+            //放大object3D对象
+            scene.add(object3D);
+            //object3D对象插入场景对象
+        }
 
 
         const renderer = new THREE.WebGLRenderer({
