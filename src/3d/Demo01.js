@@ -8,6 +8,8 @@ class Demo01 extends Component{
     componentDidMount() {
         const mainCanvas = document.getElementById("canvas-dom-2");
 
+        console.log(mainCanvas)
+
         const scene = new THREE.Scene();
         const geometry = new THREE.BoxGeometry(100, 100, 100);
         const material = new THREE.MeshLambertMaterial({color: 0x0000ff});
@@ -88,7 +90,7 @@ class Demo01 extends Component{
     }
 
     render() {
-        return <canvas id="canvas-dom-2">您的浏览器不支持canvas!</canvas>;
+        return <canvas width={window.innerWidth} height={window.innerHeight} id="canvas-dom-2">您的浏览器不支持canvas!</canvas>;
     }
 }
 
